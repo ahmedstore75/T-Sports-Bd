@@ -1,110 +1,537 @@
-
 <!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>এস এ লাইভ টিভি</title>
+    <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<html lang="en">
+        body {
+            background-color: #060913; 
+            color: #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-  <link type="text/css" rel="stylesheet" id="dark-mode-custom-link" />
+        /* প্রফেশনাল ডার্ক ও রেড হেডার */
+        header {
+            background: linear-gradient(90deg, #121214, #1a1a1e);
+            padding: 14px;
+            text-align: center;
+            border-bottom: 2px solid #ff3333; 
+            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.3);
+            z-index: 999;
+        }
 
-  <link type="text/css" rel="stylesheet" id="dark-mode-general-link" />
+        header h1 {
+            color: #ff3333; 
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.4);
+        }
 
-  <style type="text/css" id="dark-mode-custom-style" lang="en"></style>
+        /* ফিক্সড টপ ভিডিও প্লেয়ার কন্টেইনার */
+        .player-section {
+            background-color: #000;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            border-bottom: 2px solid #ff3333;
+            display: none; 
+        }
 
-  <style type="text/css" id="dark-mode-native-style" lang="en"></style>
+        /* "এখন দেখছেন" বার */
+        .playing-now-bar {
+            background-color: #0f172a;
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #ff3333;
+            font-weight: bold;
+            border-bottom: 1px solid #1e293b;
+            text-align: center;
+        }
 
-  <style type="text/css" id="dark-mode-native-sheet" lang="en"></style>
+        .video-container {
+            position: relative;
+            width: 100%;
+        }
 
-  <head>
+        /* ফুল স্ক্রিন বা রোটেট অবস্থায় ভিডিও ক্রপ না করে ১০০% ফিট */
+        .video-js video {
+            object-fit: fill !important; 
+        }
 
-    <meta charset="UTF-8" />
+        /* ডাইনামিক ক্যাটাগরি কন্টেইনার (হরাইজনটাল স্ক্রোল) */
+        .category-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px 15px 5px 15px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            background-color: #0b0f19;
+        }
 
-    <title>You Are Watching</title>
+        .category-container::-webkit-scrollbar {
+            display: none;
+        }
+        .category-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
-    <link rel="icon" href="" type="image/x-icon" />
+        .category-btn {
+            background-color: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid #334155;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        .category-btn:hover {
+            background-color: #334155;
+            color: #ffffff;
+        }
 
-    <meta name="description" content="" />
+        .category-btn.active-category-btn {
+            background-color: #ff3333;
+            color: #ffffff;
+            border-color: #ff3333;
+            box-shadow: 0 0 8px rgba(255, 51, 51, 0.4);
+        }
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        /* রিয়েল-টাইম সার্চ বার */
+        .search-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 5px 15px 10px 15px;
+            background-color: #0b0f19;
+            border-bottom: 1px solid #1e293b;
+            display: none;
+        }
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
 
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        .search-input:focus {
+            border-color: #ff3333;
+            box-shadow: 0 0 8px rgba(255, 51, 51, 0.2);
+        }
 
-    <meta http-equiv="Pragma" content="no-cache" />
+        .search-input::placeholder {
+            color: #64748b;
+        }
 
-    <meta http-equiv="Expires" content="0" />
+        /* স্ক্রোলযোগ্য চ্যানেল কন্টেন্ট এরিয়া */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" />
+        #loading {
+            text-align: center;
+            font-size: 16px;
+            color: #ff3333;
+            margin-top: 40px;
+            font-weight: bold;
+        }
 
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+        /* IPTV Pro প্রিমিয়াম লিস্ট লেআউট */
+        .channel-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-    <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
+        .channel-row {
+            background: linear-gradient(135deg, #111827, #1e293b); 
+            border-radius: 8px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border: 1px solid #1e293b;
+            border-left: 5px solid #ff3333; 
+        }
 
-  </head>
+        .channel-row:hover {
+            background: linear-gradient(135deg, #1e293b, #ff333322); 
+            border-left-color: #ff3333;
+            box-shadow: 0 4px 12px rgba(255, 51, 51, 0.2);
+            transform: translateX(4px);
+        }
 
-  <body data-new-gr-c-s-check-loaded="8.904.0" data-gr-ext-installed="">
+        .channel-row.active-channel {
+            background: linear-gradient(135deg, #1e293b, #ff333333);
+            border-left-color: #ff3333;
+            box-shadow: 0 4px 12px rgba(255, 51, 51, 0.25);
+        }
 
-    <header class="header"></header>
+        .channel-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            overflow: hidden;
+            width: 85%;
+        }
 
-    <div class="site-content">
+        .channel-number {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: bold;
+            min-width: 25px;
+        }
 
-      <div class="containerbox">
+        .logo-wrapper {
+            width: 45px;
+            height: 45px;
+            flex-shrink: 0;
+            position: relative;
+        }
 
-        <center>
+        .channel-logo {
+            width: 100%;
+            height: 100%;
+            background-color: #060913;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #ff3333;
+            font-size: 18px;
+            object-fit: contain;
+            border: 1px solid #ff333344;
+        }
 
-          <!-- Video Player -->
+        .channel-live-badge {
+            background-color: #ff3333;
+            color: #ffffff;
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 6px rgba(255, 51, 51, 0.7);
+            animation: pulse 1.5s infinite ease-in-out;
+            flex-shrink: 0;
+            display: none; 
+        }
 
-          <div id="player-container"></div>
+        .active-channel .channel-live-badge {
+            display: inline-block;
+        }
 
-          <script>
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
 
-            // Initialize JW Player
+        .channel-name {
+            font-size: 15px;
+            color: #ffffff;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-            var player = jwplayer("player-container");
+        .play-icon {
+            color: #ff3333; 
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
 
+        .channel-row:hover .play-icon, .active-channel .play-icon {
+            transform: scale(1.2);
+            color: #ffffff;
+        }
 
+        .no-result {
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
 
-            // Setup JW Player configuration
+    <header>
+        <h1>এস এ লাইভ টিভি</h1>
+    </header>
 
-            player.setup({
-
-              file: "https://your-abbu.pages.dev/abbu.mp4",
-
-              width: "100%",
-
-              stretching: "",
-
-              type: "mp4",
-
-              autostart: "true",
-
-              mute: "false",
-
-              primary: "html5",
-
-              logo: {
-
-                file: "",
-
-                hide: "false",
-
-                position: "top-left",
-
-              }
-
-            });
-
-          </script>
-
-        </center>
-
-      </div>
-
+    <div class="player-section" id="playerSection">
+        <div class="playing-now-bar">
+            <span id="playingTitle">এখন দেখছেন: লোড হচ্ছে...</span>
+        </div>
+        <div class="video-container">
+            <video id="live-player" class="video-js vjs-default-skin vjs-16-9 vjs-big-play-centered" controls preload="auto">
+                <p class="vjs-no-js">আপনার ব্রাউজারটি এই প্লেয়ারটি সাপোর্ট করছে না।</p>
+            </video>
+        </div>
     </div>
 
-  </body>
+    <div class="category-container" id="categoryContainer" style="display: none;">
+        <button class="category-btn active-category-btn" id="btn-All" onclick="filterCategory('All')">All Channels</button>
+    </div>
 
-<script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool@latest'></script>
+    <div class="search-container" id="searchContainer">
+        <input type="text" class="search-input" id="searchBox" placeholder="যেকোনো চ্যানেলের নাম লিখুন..." oninput="searchChannel()">
+    </div>
 
+    <div class="main-content">
+        <div id="loading">সার্ভার থেকে চ্যানেল লিস্ট রিড করা হচ্ছে... একটু অপেক্ষা করুন।</div>
+        <div class="channel-list" id="channelList"></div>
+    </div>
+
+    <script src="https://vjs.zencdn.net/8.3.0/video.js"></script>
+    
+    <script>
+        let player; 
+        const githubUrl = 'https://raw.githubusercontent.com/ahmedstore75/Iptvbdlive/main/mixiptvchannel.m3u';
+
+        const fetchUrls = [
+            githubUrl,
+            'https://corsproxy.io/?' + encodeURIComponent(githubUrl),
+            'https://api.allorigins.win/raw?url=' + encodeURIComponent(githubUrl),
+            'https://thingproxy.freeboard.io/fetch/' + githubUrl
+        ];
+
+        let currentUrlIndex = 0;
+        let allChannels = [];
+        let currentSelectedCategory = 'All'; 
+        let lastUserCategory = 'All'; 
+
+        async function fetchPlaylist() {
+            if (currentUrlIndex >= fetchUrls.length) {
+                document.getElementById('loading').innerHTML = "সব কটি কানেকশন এবং ব্যাকআপ এপিআই ব্যর্থ হয়েছে। প্লেলিস্ট লিঙ্কটি চেক করুন।";
+                return;
+            }
+            
+            try {
+                const response = await fetch(fetchUrls[currentUrlIndex]);
+                if (!response.ok) throw new Error('Load failed');
+                const textData = await response.text();
+                
+                if(textData && textData.includes('#EXTM3U')) {
+                    parseM3U(textData);
+                } else {
+                    throw new Error('Data format error');
+                }
+            } catch (err) {
+                console.warn(`Method ${currentUrlIndex + 1} failed. Shifting to next backup.`);
+                currentUrlIndex++;
+                fetchPlaylist();
+            }
+        }
+
+        function parseM3U(data) {
+            const lines = data.split('\n');
+            allChannels = [];
+            let categories = new Set();
+
+            let currentName = '';
+            let currentLogo = '';
+            let currentGroup = 'Uncategorized';
+
+            lines.forEach(line => {
+                line = line.trim();
+                
+                if (line.startsWith('#EXTINF:')) {
+                    const logoMatch = line.match(/tvg-logo="([^"]+)"/);
+                    currentLogo = logoMatch ? logoMatch[1] : '';
+
+                    const groupMatch = line.match(/group-title="([^"]+)"/);
+                    currentGroup = groupMatch ? groupMatch[1] : 'Uncategorized';
+
+                    const nameParts = line.split(',');
+                    currentName = nameParts[nameParts.length - 1].trim();
+                } 
+                else if (line.startsWith('http')) {
+                    const streamUrl = line;
+
+                    if (currentName) {
+                        allChannels.push({
+                            name: currentName,
+                            logo: currentLogo,
+                            category: currentGroup,
+                            url: streamUrl
+                        });
+                        if(currentGroup !== 'Uncategorized') {
+                            categories.add(currentGroup);
+                        }
+                    }
+                    currentName = '';
+                    currentLogo = '';
+                }
+            });
+
+            createCategoryButtons(categories);
+            renderChannels(allChannels); 
+            
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('categoryContainer').style.display = 'flex';
+            document.getElementById('searchContainer').style.display = 'block'; 
+        }
+
+        function createCategoryButtons(categories) {
+            const container = document.getElementById('categoryContainer');
+            container.innerHTML = '<button class="category-btn active-category-btn" id="btn-All" onclick="filterCategory(\'All\', this)">All Channels</button>';
+            
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'category-btn';
+                // 🛠️ ফিক্সড লজিক: বাংলায় বা স্পেশাল ক্যারেক্টারে আইডি সমস্যা এড়াতে 'data-category' এট্রিবিউট ব্যবহার করা হলো
+                btn.setAttribute('data-category', cat);
+                btn.innerText = cat;
+                btn.onclick = function() { filterCategory(cat, this); };
+                container.appendChild(btn);
+            });
+        }
+
+        function renderChannels(channels) {
+            const listContainer = document.getElementById('channelList');
+            listContainer.innerHTML = '';
+            let chCount = 1;
+
+            if(channels.length === 0) {
+                listContainer.innerHTML = '<div class="no-result">কোনো চ্যানেল খুঁজে পাওয়া যায়নি!</div>';
+                return;
+            }
+
+            channels.forEach(ch => {
+                const row = document.createElement('div');
+                row.className = 'channel-row';
+                row.onclick = function() { playVideo(ch.name, ch.url, this); };
+
+                let logoHtml = '';
+                if (ch.logo) {
+                    logoHtml = `<img class="channel-logo" src="${ch.logo}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">`;
+                }
+                const fallbackLetter = ch.name.charAt(0).toUpperCase();
+                const letterHtml = `<div class="channel-logo" style="display: ${ch.logo ? 'none' : 'flex'}">${fallbackLetter}</div>`;
+
+                row.innerHTML = `
+                    <div class="channel-left">
+                        <div class="channel-number">${chCount++}</div>
+                        <div class="logo-wrapper">
+                            ${logoHtml}
+                            ${letterHtml}
+                        </div>
+                        <span class="channel-live-badge">LIVE</span>
+                        <div class="channel-name">${ch.name}</div>
+                    </div>
+                    <div class="play-icon">▶</div>
+                `;
+                listContainer.appendChild(row);
+            });
+        }
+
+        function filterCategory(category, btnElement) {
+            currentSelectedCategory = category; 
+            
+            if (document.getElementById('searchBox').value === '') {
+                lastUserCategory = category;
+            }
+
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => btn.classList.remove('active-category-btn'));
+            
+            if(btnElement) {
+                btnElement.classList.add('active-category-btn');
+            } else {
+                // 🛠️ ফিক্সড লজিক: আইডি-র বদলে ডাটা এট্রিবিউট দিয়ে বাটন হাইলাইট করা হচ্ছে
+                if (category === 'All') {
+                    document.getElementById('btn-All').classList.add('active-category-btn');
+                } else {
+                    const targetBtn = document.querySelector(`.category-btn[data-category="${category}"]`);
+                    if (targetBtn) targetBtn.classList.add('active-category-btn');
+                }
+            }
+
+            if (category === 'All') {
+                renderChannels(allChannels);
+            } else {
+                const filtered = allChannels.filter(ch => ch.category === category);
+                renderChannels(filtered);
+            }
+        }
+
+        function searchChannel() {
+            const query = document.getElementById('searchBox').value.toLowerCase().trim();
+            
+            if (query !== '') {
+                currentSelectedCategory = 'All';
+                const buttons = document.querySelectorAll('.category-btn');
+                buttons.forEach(btn => btn.classList.remove('active-category-btn'));
+                document.getElementById('btn-All').classList.add('active-category-btn');
+
+                const searchedChannels = allChannels.filter(ch => ch.name.toLowerCase().includes(query));
+                renderChannels(searchedChannels);
+            } else {
+                filterCategory(lastUserCategory);
+            }
+        }
+
+        function playVideo(name, url, clickedElement) {
+            const activeRows = document.querySelectorAll('.channel-row.active-channel');
+            activeRows.forEach(row => row.classList.remove('active-channel'));
+
+            clickedElement.classList.add('active-channel');
+
+            document.getElementById('playingTitle').innerText = "এখন দেখছেন: " + name;
+            document.getElementById('playerSection').style.display = 'block';
+            
+            if (!player) {
+                player = videojs('live-player');
+            }
+
+            player.src({
+                src: url,
+                type: 'application/x-mpegURL'
+            });
+            player.play();
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onload = fetchPlaylist;
+    </script>
+</body>
 </html>
