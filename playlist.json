@@ -1,62 +1,366 @@
 [
   {
+    "id": "102",
+    "name": "Ekattor HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1739963327549.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1705/output/index.m3u8",
+    "category": "News"
+  },
+  {
+    "id": "116",
+    "name": "Sony Sports TEN 5",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1739906861365.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1717/output/index.m3u8",
+    "category": "Sports"
+  },
+  {
+    "id": "117",
+    "name": "Sony Sports TEN 2",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1762850019257.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1726/output/index.m3u8",
+    "category": "Sports"
+  },
+  {
+    "id": "118",
+    "name": "Sony Sports TEN 1",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1762853147045.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1719/output/index.m3u8",
+    "category": "Sports"
+  },
+  {
+    "id": "122",
+    "name": "BTV",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1784629845642.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1725/output/index.m3u8",
+    "category": "Entertainment"
+  },
+  {
+    "id": "124",
+    "name": "Sony Entertainment",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1740380280065.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1718/output/index.m3u8",
+    "category": "Entertainment"
+  },
+  {
+    "id": "132",
+    "name": "Channel I HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1740567626692.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/index.m3u8",
+    "category": "Entertainment"
+  },
+  {
+    "id": "134",
+    "name": "Deepto TV HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1742713000749.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1711/output/index.m3u8",
+    "category": "Entertainment"
+  },
+  {
+    "id": "138",
+    "name": "Deepto TV HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1742713000749.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1711/output/index.m3u8",
+    "category": "Entertainment"
+  },
+  {
+    "id": "141",
+    "name": "SRK TV",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1746005940155.png",
+    "stream_url": "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/playlist.m3u8",
+    "category": "Entertainment"
+  },
+  {
+    "id": "142",
+    "name": "Sony AATH",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1739906659479.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1732/output/index.m3u8",
+    "category": "Entertainment"
+  },
+  {
+    "id": "143",
+    "name": "ZEE BANGLA",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1756017182009.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1714/output/index.m3u8",
+    "category": "Entertainment"
+  },
+  {
+    "id": "153",
+    "name": "Ten Cricket",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1745304841482.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1727/output/index.m3u8",
+    "category": "Sports"
+  },
+  {
+    "id": "155",
+    "name": "Sony AATH",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1739906659479.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1732/output/index.m3u8",
+    "category": "Entertainment"
+  },
+  {
+    "id": "165",
+    "name": "PL Live 1",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1787208908285.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1707/output/index.m3u8",
+    "category": "Sports"
+  },
+  {
+    "id": "175",
+    "name": "Sony Entertainment",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1740380280065.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1718/output/index.m3u8",
+    "category": "Entertainment"
+  },
+  {
+    "id": "185",
+    "name": "DBC News HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770186306600.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8",
+    "category": "News"
+  },
+  {
+    "id": "186",
+    "name": "News 24 HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770186895850.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1708/output/index.m3u8",
+    "category": "News"
+  },
+  {
+    "id": "188",
+    "name": "Channel 9 HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770188008067.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/index.m3u8",
+    "category": "Entertainment"
+  },
+  {
+    "id": "191",
+    "name": "PL Live 2",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1787209455553.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1710/output/index.m3u8",
+    "category": "Sports"
+  },
+  {
+    "id": "192",
+    "name": "Screem",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770312098339.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/screem/playlist.m3u8",
+    "category": "Movies"
+  },
+  {
+    "id": "193",
+    "name": "Originals",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770313122372.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/originals/playlist.m3u8",
+    "category": "Movies"
+  },
+  {
+    "id": "196",
+    "name": "Uniques HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770347327658.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/uniques/playlist.m3u8",
+    "category": "Movies"
+  },
+  {
+    "id": "197",
+    "name": "Cineedge HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770347851305.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/cineedge/playlist.m3u8",
+    "category": "Movies"
+  },
+  {
+    "id": "198",
+    "name": "Superrix HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770348388925.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/superrix/playlist.m3u8",
+    "category": "Movies"
+  },
+  {
+    "id": "201",
+    "name": "SRK TV",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1746005940155.png",
+    "stream_url": "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/playlist.m3u8",
+    "category": "Entertainment"
+  },
+  {
+    "id": "202",
+    "name": "Crazy Ex",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770348753896.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/crazy_ex/playlist.m3u8",
+    "category": "Sports"
+  },
+  {
+    "id": "205",
+    "name": "Sports Legends",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770377900139.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/sportslegends/playlist.m3u8",
+    "category": "Sports"
+  },
+  {
+    "id": "206",
+    "name": "Flash Guys HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770378074527.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/flashguys/playlist.m3u8",
+    "category": "Sports"
+  },
+  {
+    "id": "207",
+    "name": "Party Universe",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770378215384.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/partyuniverse/playlist.m3u8",
+    "category": "Music"
+  },
+  {
+    "id": "208",
+    "name": "Delicious",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770378370876.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/delicious/playlist.m3u8",
+    "category": "Infotainment"
+  },
+  {
+    "id": "209",
+    "name": "Luxell HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770378560772.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/luxell/playlist.m3u8",
+    "category": "Infotainment"
+  },
+  {
+    "id": "210",
+    "name": "Nikki",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770378704923.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/nikky/playlist.m3u8",
+    "category": "Kids"
+  },
+  {
+    "id": "211",
+    "name": "Joy",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770378874717.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/joy/playlist.m3u8",
+    "category": "Kids"
+  },
+  {
+    "id": "212",
+    "name": "BuddyStar HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770379038530.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/buddystar/playlist.m3u8",
+    "category": "Kids"
+  },
+  {
+    "id": "213",
+    "name": "Funny Junior HD",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770379573329.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/funnyjunior/playlist.m3u8",
+    "category": "Kids"
+  },
+  {
+    "id": "214",
+    "name": "Crimes",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770380126540.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/crimes/playlist.m3u8",
+    "category": "Movies"
+  },
+  {
+    "id": "215",
+    "name": "True Stories",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770380306806.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/truestories/playlist.m3u8",
+    "category": "Movies"
+  },
+  {
+    "id": "216",
+    "name": "Intelligence",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770380460488.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/intelligence/playlist.m3u8",
+    "category": "Movies"
+  },
+  {
+    "id": "217",
+    "name": "Sports Range",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770380601958.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/sportrange/playlist.m3u8",
+    "category": "Sports"
+  },
+  {
+    "id": "218",
+    "name": "Thunder Er",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770380791303.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/thunder/playlist.m3u8",
+    "category": "Sports"
+  },
+  {
+    "id": "219",
+    "name": "Fighters",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770380942670.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/fighter/playlist.m3u8",
+    "category": "Sports"
+  },
+  {
+    "id": "220",
+    "name": "Smarty",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770381107924.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/smarty/playlist.m3u8",
+    "category": "Kids"
+  },
+  {
+    "id": "221",
+    "name": "Lucky Family",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770381248531.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/luckyfamily/playlist.m3u8",
+    "category": "Kids"
+  },
+  {
+    "id": "222",
+    "name": "Kids Stars",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770381398090.png",
+    "stream_url": "https://nomawnoijl.gpcdn.net/akash/kidsstars/playlist.m3u8",
+    "category": "Kids"
+  },
+  {
+    "id": "228",
+    "name": "BTV Shangshad",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1773247382366.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8",
+    "category": "News"
+  },
+  {
+    "id": "229",
+    "name": "Maasranga TV",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1773680325498.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1722/output/index.m3u8",
+    "category": "Entertainment"
+  },
+  {
+    "id": "248",
+    "name": "Program Promo",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1783925099346.png",
+    "stream_url": "https://7lsc33jopp.gpcdn.net/bpk-tv/1720/output/index.m3u8",
+    "category": "Infotainment"
+  },
+  {
+    "id": "289",
+    "name": "Sony Max",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1780310920616.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1730/output/index.m3u8",
+    "category": "Movies"
+  },
+  {
+    "id": "290",
+    "name": "Sony Pix",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1780311807965.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1731/output/index.m3u8",
+    "category": "Movies"
+  },
+  {
+    "id": "299",
+    "name": "Channel 1",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1781163068414.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/index.m3u8",
+    "category": "News"
+  },
+  {
     "id": "303",
     "name": "PL Live 3",
     "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1787209803973.png",
     "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1724/output/index.m3u8",
-    "headers": {
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      "Referer": "https://akashgo.com/",
-      "Origin": "https://akashgo.com"
-    },
     "category": "Sports"
-  },
-  {
-    "id": "308",
-    "name": "Sony Sports TEN 1",
-    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1762853147045.png",
-    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1719/output/index.m3u8",
-    "headers": {
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      "Referer": "https://akashgo.com/",
-      "Origin": "https://akashgo.com"
-    },
-    "category": "Sports"
-  },
-  {
-    "id": "309",
-    "name": "Sony Sports TEN 2",
-    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1762850019257.png",
-    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1726/output/index.m3u8",
-    "headers": {
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      "Referer": "https://akashgo.com/",
-      "Origin": "https://akashgo.com"
-    },
-    "category": "Sports"
-  },
-  {
-    "id": "312",
-    "name": "Sony Sports TEN 5",
-    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1739906861365.png",
-    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1717/output/index.m3u8",
-    "headers": {
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      "Referer": "https://akashgo.com/",
-      "Origin": "https://akashgo.com"
-    },
-    "category": "Sports"
-  },
-  {
-    "id": "318",
-    "name": "Somoy tv",
-    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1784629064327.png",
-    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1713/output/index.m3u8",
-    "headers": {
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      "Referer": "https://akashgo.com/",
-      "Origin": "https://akashgo.com"
-    },
-    "category": "News"
   }
 ]
