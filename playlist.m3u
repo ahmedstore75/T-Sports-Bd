@@ -1,7 +1,32 @@
 #EXTM3U
 
+#EXTINF:-1 tvg-id="303" tvg-name="PL Live 3" tvg-logo="https://tstatic.akash-go.com/cms-ui/images/custom-content/1787209803973.png" group-title="Sports", PL Live 3
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+#EXTVLCOPT:http-referrer=https://akashgo.com/
+#KODIPROP:inputstream.adaptive.manifest_headers=User-Agent=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F120.0.0.0%20Safari%2F537.36&Referer=https%3A%2F%2Fakashgo.com%2F
+https://owrcovcrpy.gpcdn.net/bpk-tv/1724/output/index.m3u8
+
+#EXTINF:-1 tvg-id="308" tvg-name="Sony Sports TEN 1" tvg-logo="https://tstatic.akash-go.com/cms-ui/images/custom-content/1762853147045.png" group-title="Sports", Sony Sports TEN 1
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+#EXTVLCOPT:http-referrer=https://akashgo.com/
+#KODIPROP:inputstream.adaptive.manifest_headers=User-Agent=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F120.0.0.0%20Safari%2F537.36&Referer=https%3A%2F%2Fakashgo.com%2F
+https://owrcovcrpy.gpcdn.net/bpk-tv/1719/output/index.m3u8
+
+#EXTINF:-1 tvg-id="309" tvg-name="Sony Sports TEN 2" tvg-logo="https://tstatic.akash-go.com/cms-ui/images/custom-content/1762850019257.png" group-title="Sports", Sony Sports TEN 2
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+#EXTVLCOPT:http-referrer=https://akashgo.com/
+#KODIPROP:inputstream.adaptive.manifest_headers=User-Agent=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F120.0.0.0%20Safari%2F537.36&Referer=https%3A%2F%2Fakashgo.com%2F
+https://owrcovcrpy.gpcdn.net/bpk-tv/1726/output/index.m3u8
+
+#EXTINF:-1 tvg-id="312" tvg-name="Sony Sports TEN 5" tvg-logo="https://tstatic.akash-go.com/cms-ui/images/custom-content/1739906861365.png" group-title="Sports", Sony Sports TEN 5
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+#EXTVLCOPT:http-referrer=https://akashgo.com/
+#KODIPROP:inputstream.adaptive.manifest_headers=User-Agent=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F120.0.0.0%20Safari%2F537.36&Referer=https%3A%2F%2Fakashgo.com%2F
+https://owrcovcrpy.gpcdn.net/bpk-tv/1717/output/index.m3u8
+
 #EXTINF:-1 tvg-id="318" tvg-name="Somoy tv" tvg-logo="https://tstatic.akash-go.com/cms-ui/images/custom-content/1784629064327.png" group-title="News", Somoy tv
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 #EXTVLCOPT:http-referrer=https://akashgo.com/
+#KODIPROP:inputstream.adaptive.manifest_headers=User-Agent=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F120.0.0.0%20Safari%2F537.36&Referer=https%3A%2F%2Fakashgo.com%2F
 https://owrcovcrpy.gpcdn.net/bpk-tv/1713/output/index.m3u8
 

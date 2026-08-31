@@ -1,12 +1,61 @@
 [
   {
+    "id": "303",
+    "name": "PL Live 3",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1787209803973.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1724/output/index.m3u8",
+    "headers": {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      "Referer": "https://akashgo.com/",
+      "Origin": "https://akashgo.com"
+    },
+    "category": "Sports"
+  },
+  {
+    "id": "308",
+    "name": "Sony Sports TEN 1",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1762853147045.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1719/output/index.m3u8",
+    "headers": {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      "Referer": "https://akashgo.com/",
+      "Origin": "https://akashgo.com"
+    },
+    "category": "Sports"
+  },
+  {
+    "id": "309",
+    "name": "Sony Sports TEN 2",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1762850019257.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1726/output/index.m3u8",
+    "headers": {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      "Referer": "https://akashgo.com/",
+      "Origin": "https://akashgo.com"
+    },
+    "category": "Sports"
+  },
+  {
+    "id": "312",
+    "name": "Sony Sports TEN 5",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1739906861365.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1717/output/index.m3u8",
+    "headers": {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      "Referer": "https://akashgo.com/",
+      "Origin": "https://akashgo.com"
+    },
+    "category": "Sports"
+  },
+  {
     "id": "318",
     "name": "Somoy tv",
     "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1784629064327.png",
     "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1713/output/index.m3u8",
     "headers": {
       "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      "Referer": "https://akashgo.com/"
+      "Referer": "https://akashgo.com/",
+      "Origin": "https://akashgo.com"
     },
     "category": "News"
   }
