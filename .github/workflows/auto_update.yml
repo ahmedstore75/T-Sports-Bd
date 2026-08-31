@@ -1,0 +1,28 @@
+name: Auto Update Playlists
+
+on:
+  schedule:
+    - cron: 0 */1 * * *
+  workflow_dispatch:
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Fetch Script
+        run: node fetch_to_json.js
+
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add playlist.json playlist.m3u
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto updated M3U & JSON playlists [skip ci]" && git push)
