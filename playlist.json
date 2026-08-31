@@ -1,14 +1,13 @@
 [
   {
     "id": "318",
-    "name": "Akash Go Channel 318",
-    "logo": "https://akashgo.com/Json_images/favicon.ico",
-    "stream_url": "",
+    "name": "Somoy tv",
+    "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1784629064327.png",
+    "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1713/output/index.m3u8",
     "headers": {
       "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      "Referer": "https://akashgo.com/",
-      "Cookie": ""
+      "Referer": "https://akashgo.com/"
     },
-    "category": "Live TV"
+    "category": "News"
   }
 ]
