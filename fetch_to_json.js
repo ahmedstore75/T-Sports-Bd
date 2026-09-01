@@ -1,16 +1,17 @@
 const fs = require('fs');
 
+// বাংলা চ্যানেলগুলোকে প্রথমে রাখার জন্য কিওয়ার্ড লিস্ট
 const BENGALI_KEYWORDS = [
     'somoy', 'jamuna', 'independent', 'dbc', 'ekattor', 'atn', 'channel i', 
     'ntv', 'rtv', 'bangla', 'bd', 'deepto', 'nagorik', 'btv', 'maasranga', 'channel 24'
 ];
 
 async function generatePlaylists() {
-    console.log("Fetching channels and generating playlists...");
+    console.log("Fetching channels and generating individual dynamic cookies...");
 
     const rawChannels = [];
 
-    // ১০০ থেকে ৪১০ চ্যানেল আইডি পর্যন্ত লুপ
+    // ১০০ থেকে ৪১০ পর্যন্ত চ্যানেল আইডি স্ক্যান করা
     for (let id = 100; id <= 410; id++) {
         try {
             const apiUrl = `https://kong.akash-go.com/content-detail/pub/api/v6/channels/${id}`;
@@ -25,6 +26,13 @@ async function generatePlaylists() {
 
             if (!response.ok) continue;
 
+            // ১. রেসপন্স হেডার থেকে প্রতিটি চ্যানেলের নিজস্ব Set-Cookie ধরা
+            let dynamicCookie = "";
+            const setCookieHeader = response.headers.get('set-cookie');
+            if (setCookieHeader) {
+                dynamicCookie = setCookieHeader.split(';')[0];
+            }
+
             const resData = await response.json();
             const channelMeta = resData?.data?.channelMeta;
 
@@ -34,18 +42,17 @@ async function generatePlaylists() {
                 const streamUrl = channelMeta.nonProtectedHlsConsumerUrl || channelMeta.protectedHlsConsumerUrl || "";
                 const category = channelMeta.category || "News";
 
-                // ডায়নামিক কুকি এক্সট্র্যাক্ট বা সেফ ফলব্যাক
-                let dynamicCookie = channelMeta.cookie || channelMeta.token || "";
-                const setCookieHeader = response.headers.get('set-cookie');
-                if (setCookieHeader) {
-                    dynamicCookie = setCookieHeader.split(';')[0];
-                }
-
+                // ২. যদি হেডারে কুকি না থাকে, তবে API বডির ডেটা থেকে ইউনিক কুকি তৈরি করা
                 if (!dynamicCookie) {
-                    dynamicCookie = "Edge-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9vd3Jjb3ZjcnB5LmdwY2RuLm5ldC9icGstdHYvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRWRnZVRpbWUiOjE3ODgyNTMyMzd9fX1dfQ;Edge-Signature=V3G6GBiA2N6wlM8aLqfdsv1kOW8Z1pxEZgL9GwEuiIs";
+                    if (channelMeta.cookie) {
+                        dynamicCookie = channelMeta.cookie;
+                    } else if (channelMeta.token) {
+                        dynamicCookie = `Edge-Policy=${channelMeta.token}`;
+                    }
                 }
 
-                if (streamUrl) {
+                // ৩. স্ট্রিম লিংক এবং কুকি উভয়ই موجود থাকলে তালিকায় যোগ করা
+                if (streamUrl && dynamicCookie) {
                     rawChannels.push({
                         name: channelName,
                         logo: logoUrl,
@@ -56,11 +63,11 @@ async function generatePlaylists() {
                 }
             }
         } catch (err) {
-            // স্কিপ
+            // কোনো এরর হলে স্কিপ করবে
         }
     }
 
-    // ডুপ্লিকেট ফিল্টার
+    // ডুপ্লিকেট চ্যানেল বাদ দেওয়া
     const uniqueChannels = [];
     const seenNames = new Set();
 
@@ -72,7 +79,7 @@ async function generatePlaylists() {
         }
     }
 
-    // বাংলা চ্যানেল উপরে সর্ট করা
+    // বাংলা চ্যানেলগুলোকে সবার উপরে সর্ট করা
     uniqueChannels.sort((a, b) => {
         const aIsBengali = BENGALI_KEYWORDS.some(key => a.name.toLowerCase().includes(key)) || a.category.toLowerCase().includes('bangla');
         const bIsBengali = BENGALI_KEYWORDS.some(key => b.name.toLowerCase().includes(key)) || b.category.toLowerCase().includes('bangla');
@@ -82,7 +89,7 @@ async function generatePlaylists() {
         return a.name.localeCompare(b.name);
     });
 
-    // ১. M3U প্লেলিস্ট সেভ করা
+    // ১. M3U প্লেলিস্ট ফাইল সেভ করা (আলাদা কুকিসহ)
     let m3uContent = '#EXTM3U\n\n';
     uniqueChannels.forEach(ch => {
         m3uContent += `#EXTINF:-1 tvg-logo="${ch.logo}" group-title="${ch.category}",${ch.name}\n`;
@@ -91,8 +98,9 @@ async function generatePlaylists() {
     });
 
     fs.writeFileSync('playlist.m3u', m3uContent);
+    console.log('playlist.m3u সফলভাবে তৈরি হয়েছে!');
 
-    // ২. JSON প্লেলিস্ট ঠিক স্ক্রিনশটের ফরম্যাটে সেভ করা
+    // ২. JSON প্লেলিস্ট ফাইল সেভ করা (আপনার কাঙ্ক্ষিত ফরম্যাটে)
     const today = new Date().toISOString().split('T')[0];
     const jsonStructure = {
         status: "success",
@@ -110,7 +118,7 @@ async function generatePlaylists() {
     };
 
     fs.writeFileSync('playlist.json', JSON.stringify(jsonStructure, null, 2));
-    console.log(`সফলভাবে ${uniqueChannels.length} টি চ্যানেল যুক্ত হয়েছে!`);
+    console.log(`playlist.json সফলভাবে তৈরি হয়েছে! মোট চ্যানেল: ${uniqueChannels.length}`);
 }
 
 generatePlaylists();
