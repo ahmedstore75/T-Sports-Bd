@@ -1,29 +1,30 @@
 const fs = require('fs');
 
-// Akash Go-এর মূল রিকোয়েস্ট হেডার্স
-// আপনার কাছে আসল অ্যাকাউন্ট বা সেশনের Cookie থাকলে নিচে 'Cookie' ফিল্ডে বসিয়ে দিতে পারেন
+// বাংলাদেশি/বাংলা চ্যানেল চিহ্নিত করার কি-ওয়ার্ড
+const BENGALI_KEYWORDS = ['somoy', 'jamuna', 'independent', 'dbc', 'ekattor', 'atn', 'channel i', 'ntv', 'rtv', 'bangla', 'bd', 'deepto', 'nagorik', 'somoy tv'];
+
 const requestHeaders = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Referer': 'https://akashgo.com/',
-    'Origin': 'https://akashgo.com',
-    'Accept': 'application/json, text/plain, */*',
-    'Cookie': 'session_id=akash_go_user_session; auth_token=sample_token' // এখানে প্রয়োজন অনুযায়ী আপনার কুকি বসান
+    'User-Agent': 'okhttp/5.1.0',
+    'Accept-Encoding': 'gzip'
 };
 
-async function generateAllPlaylists() {
-    const jsonList = [];
-    let m3uContent = '#EXTM3U\n\n';
-    
-    // ডুপ্লিকেট চ্যানেল ফিল্টার করার জন্য Set
-    const processedChannelNames = new Set();
+async function generatePlaylists() {
+    console.log("Fetching channel data...");
 
-    console.log("Fetching channels and removing duplicates...");
+    const rawChannels = [];
 
+    // ১০০ থেকে ৪১০ চ্যানেল আইডি পর্যন্ত তথ্য সংগ্রহ
     for (let id = 100; id <= 410; id++) {
         try {
             const apiUrl = `https://kong.akash-go.com/content-detail/pub/api/v6/channels/${id}`;
-            const response = await fetch(apiUrl, { headers: requestHeaders });
-            
+            const response = await fetch(apiUrl, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                    'Referer': 'https://akashgo.com/',
+                    'Origin': 'https://akashgo.com'
+                }
+            });
+
             if (!response.ok) continue;
 
             const resData = await response.json();
@@ -31,54 +32,93 @@ async function generateAllPlaylists() {
 
             if (channelMeta && channelMeta.channelName) {
                 const channelName = channelMeta.channelName.trim();
-                
-                // যদি এই নামের চ্যানেল আগে থেকেই থেকে থাকে, তবে স্কিপ করবে (ডাবল হবে না)
-                if (processedChannelNames.has(channelName.toLowerCase())) {
-                    continue;
-                }
-
                 const logoUrl = channelMeta.logo || "";
                 const streamUrl = channelMeta.nonProtectedHlsConsumerUrl || channelMeta.protectedHlsConsumerUrl || "";
-                const category = channelMeta.category || "Live TV";
+                const category = channelMeta.category || "News";
+
+                // API থেকে পাওয়া বা এক্সট্র্যাক্ট করা Edge-Policy কুকি (প্রয়োজন অনুযায়ী অ্যাডজাস্ট করুন)
+                const dynamicCookie = channelMeta.cookie || "Edge-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9vd3Jjb3ZjcnB5LmdwY2RuLm5ldC9icGstdHYvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRWRnZVRpbWUiOjE3ODgyNTMyMzd9fX1dfQ;Edge-Signature=V3G6GBiA2N6wlM8aLqfdsv1kOW8Z1pxEZgL9GwEuiIs";
 
                 if (streamUrl) {
-                    // চ্যানেলের নাম সেভ করে রাখা হচ্ছে যাতে ডাবল না আসে
-                    processedChannelNames.add(channelName.toLowerCase());
+                    let hostName = "owrcovcrpy.gpcdn.net";
+                    try {
+                        hostName = new URL(streamUrl).hostname;
+                    } catch (e) {}
 
-                    // ১. JSON অবজেক্টে কুকিসহ হেডার যুক্তকরণ
-                    jsonList.push({
+                    rawChannels.push({
                         id: String(id),
                         name: channelName,
                         logo: logoUrl,
                         stream_url: streamUrl,
-                        headers: {
-                            "User-Agent": requestHeaders['User-Agent'],
-                            "Referer": requestHeaders['Referer'],
-                            "Origin": requestHeaders['Origin'],
-                            "Cookie": requestHeaders['Cookie']
-                        },
-                        category: category
+                        category: category,
+                        cookie: dynamicCookie,
+                        host: hostName
                     });
-
-                    // ২. M3U প্লেলিস্টে হেডার্স ও কুকি যুক্তকরণ
-                    m3uContent += `#EXTINF:-1 tvg-id="${id}" tvg-name="${channelName}" tvg-logo="${logoUrl}" group-title="${category}", ${channelName}\n`;
-                    m3uContent += `#EXTVLCOPT:http-user-agent=${requestHeaders['User-Agent']}\n`;
-                    m3uContent += `#EXTVLCOPT:http-referrer=${requestHeaders['Referer']}\n`;
-                    if (requestHeaders['Cookie']) {
-                        m3uContent += `#EXTVLCOPT:http-cookie=${requestHeaders['Cookie']}\n`;
-                    }
-                    m3uContent += `#KODIPROP:inputstream.adaptive.manifest_headers=User-Agent=${encodeURIComponent(requestHeaders['User-Agent'])}&Referer=${encodeURIComponent(requestHeaders['Referer'])}&Cookie=${encodeURIComponent(requestHeaders['Cookie'])}\n`;
-                    m3uContent += `${streamUrl}\n\n`;
                 }
             }
         } catch (err) {
-            // চ্যানেল না পেলে স্কিপ করবে
+            // স্কিপ আইডি
         }
     }
 
-    fs.writeFileSync('playlist.json', JSON.stringify(jsonList, null, 2));
+    // ডুপ্লিকেট চ্যানেল বাদ দেওয়া
+    const uniqueChannels = [];
+    const seenNames = new Set();
+
+    for (const ch of rawChannels) {
+        const lowerName = ch.name.toLowerCase();
+        if (!seenNames.has(lowerName)) {
+            seenNames.add(lowerName);
+            uniqueChannels.push(ch);
+        }
+    }
+
+    // বাংলা চ্যানেলগুলোকে সবার উপরে সর্ট করা
+    uniqueChannels.sort((a, b) => {
+        const aIsBengali = BENGALI_KEYWORDS.some(key => a.name.toLowerCase().includes(key)) || a.category.toLowerCase().includes('bangla');
+        const bIsBengali = BENGALI_KEYWORDS.some(key => b.name.toLowerCase().includes(key)) || b.category.toLowerCase().includes('bangla');
+
+        if (aIsBengali && !bIsBengali) return -1;
+        if (!aIsBengali && bIsBengali) return 1;
+        return a.name.localeCompare(b.name);
+    });
+
+    // ১. M3U প্লেলিস্ট জেনারেট করা
+    let m3uContent = '#EXTM3U\n\n';
+    uniqueChannels.forEach(ch => {
+        m3uContent += `#EXTINF:-1 tvg-logo="${ch.logo}" group-title="${ch.category}",${ch.name}\n`;
+        m3uContent += `#EXTHTTP:{"cookie":"${ch.cookie}"}\n`;
+        m3uContent += `${ch.stream_url}\n\n`;
+    });
+
     fs.writeFileSync('playlist.m3u', m3uContent);
-    console.log(`ডুপ্লিকেট ছাড়া মোট ${jsonList.length} টি অনন্য চ্যানেল সফলভাবে তৈরি হয়েছে!`);
+    console.log('playlist.m3u সফলভাবে তৈরি হয়েছে!');
+
+    // ২. জেসন প্লেলিস্ট জেনারেট করা (স্ক্রিনশটের ফরম্যাট অনুযায়ী)
+    const today = new Date().toISOString().split('T')[0];
+    const jsonStructure = {
+        status: "success",
+        name: "Akash Go Live Channels",
+        owner: "Ahammad Ali",
+        channels_amount: uniqueChannels.length,
+        last_update: today,
+        response: uniqueChannels.map(ch => ({
+            category_name: ch.category,
+            name: ch.name,
+            link: ch.stream_url,
+            headers: {
+                Host: ch.host,
+                cookie: ch.cookie,
+                "user-agent": requestHeaders['User-Agent'],
+                "client-api-header": "null",
+                "accept-encoding": requestHeaders['Accept-Encoding']
+            },
+            logo: ch.logo
+        }))
+    };
+
+    fs.writeFileSync('playlist.json', JSON.stringify(jsonStructure, null, 2));
+    console.log('playlist.json সফলভাবে তৈরি হয়েছে!');
 }
 
-generateAllPlaylists();
+generatePlaylists();
