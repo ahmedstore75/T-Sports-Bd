@@ -1,34 +1,33 @@
 const fs = require('fs');
 
 // বাংলা চ্যানেল অগ্রাধিকার দেওয়ার তালিকা
-const BENGALI_KEYWORDS = ['somoy', 'jamuna', 'independent', 'dbc', 'ekattor', 'atn', 'channel i', 'ntv', 'rtv', 'bangla', 'bd', 'deepto', 'nagorik', 'somoy tv'];
+const BENGALI_KEYWORDS = [
+    'somoy', 'jamuna', 'independent', 'dbc', 'ekattor', 'atn', 'channel i', 
+    'ntv', 'rtv', 'bangla', 'bd', 'deepto', 'nagorik', 'btv', 'maasranga', 'channel 24'
+];
 
-const defaultHeaders = {
-    'User-Agent': 'okhttp/5.1.0',
-    'Accept-Encoding': 'gzip'
-};
-
-// কুকি হেডার পার্স করার ফাংশন
+// ডায়নামিক কুকি বের করার ফাংশন
 function extractCookieFromResponse(response, channelMeta) {
-    // ১. API এর সরাসরি কুকি ফিল্ড চেক
+    // ১. API মেটাডেটার ভেতরের কুকি
     if (channelMeta?.cookie) return channelMeta.cookie;
     if (channelMeta?.token) return `Edge-Policy=${channelMeta.token}`;
 
-    // ২. Response Headers থেকে Set-Cookie চেক
+    // ২. HTTP Response Header এর Set-Cookie
     const setCookie = response.headers.get('set-cookie');
     if (setCookie) {
         return setCookie.split(';')[0];
     }
 
-    // ৩. ডিফল্ট স্ট্রাকচার্ড কুকি ফরম্যাট (যদি সার্ভার সরাসরি ম্যানিফেস্টে না পাঠায়)
+    // ৩. ডিফল্ট ফলব্যাক কুকি ফরম্যাট
     return "Edge-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9vd3Jjb3ZjcnB5LmdwY2RuLm5ldC9icGstdHYvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRWRnZVRpbWUiOjE3ODgyNTMyMzd9fX1dfQ;Edge-Signature=V3G6GBiA2N6wlM8aLqfdsv1kOW8Z1pxEZgL9GwEuiIs";
 }
 
 async function generatePlaylists() {
-    console.log("Fetching channel data and dynamic cookies...");
+    console.log("Fetching channels and generating playlists...");
 
     const rawChannels = [];
 
+    // ১০০ থেকে ৪১০ চ্যানেল আইডি পর্যন্ত তথ্য সংগ্রহ
     for (let id = 100; id <= 410; id++) {
         try {
             const apiUrl = `https://kong.akash-go.com/content-detail/pub/api/v6/channels/${id}`;
@@ -52,32 +51,24 @@ async function generatePlaylists() {
                 const streamUrl = channelMeta.nonProtectedHlsConsumerUrl || channelMeta.protectedHlsConsumerUrl || "";
                 const category = channelMeta.category || "News";
 
-                // ডায়নামিক কুকি এক্সট্র্যাক্ট
                 const dynamicCookie = extractCookieFromResponse(response, channelMeta);
 
                 if (streamUrl) {
-                    let hostName = "owrcovcrpy.gpcdn.net";
-                    try {
-                        hostName = new URL(streamUrl).hostname;
-                    } catch (e) {}
-
                     rawChannels.push({
-                        id: String(id),
                         name: channelName,
                         logo: logoUrl,
                         stream_url: streamUrl,
-                        category: category,
                         cookie: dynamicCookie,
-                        host: hostName
+                        category: category
                     });
                 }
             }
         } catch (err) {
-            // স্কিপ আইডি
+            // স্কিপ
         }
     }
 
-    // ডুপ্লিকেট চ্যানেল বাদ দেওয়া
+    // ডুপ্লিকেট চ্যানেল রিমুভ করা
     const uniqueChannels = [];
     const seenNames = new Set();
 
@@ -108,33 +99,27 @@ async function generatePlaylists() {
     });
 
     fs.writeFileSync('playlist.m3u', m3uContent);
-    console.log('playlist.m3u তৈরি সম্পন্ন!');
+    console.log('playlist.m3u তৈরি সফল হয়েছে!');
 
-    // ২. JSON প্লেলিস্ট ঠিক স্ক্রিনশটের ফরম্যাটে সেভ করা
+    // ২. JSON প্লেলিস্ট ঠিক স্ক্রিনশটের স্ট্রাকচারে সেভ করা
     const today = new Date().toISOString().split('T')[0];
     const jsonStructure = {
         status: "success",
-        name: "Akash Go Live Channels",
+        name: "Live Channels",
         owner: "Ahammad Ali",
         channels_amount: uniqueChannels.length,
         last_update: today,
-        response: uniqueChannels.map(ch => ({
-            category_name: ch.category,
+        response: uniqueChannels.map((ch, index) => ({
+            id: index + 1,
             name: ch.name,
-            link: ch.stream_url,
-            headers: {
-                Host: ch.host,
-                cookie: ch.cookie,
-                "user-agent": defaultHeaders['User-Agent'],
-                "client-api-header": "null",
-                "accept-encoding": defaultHeaders['Accept-Encoding']
-            },
-            logo: ch.logo
+            logo: ch.logo,
+            stream_url: ch.stream_url,
+            cookie: ch.cookie
         }))
     };
 
     fs.writeFileSync('playlist.json', JSON.stringify(jsonStructure, null, 2));
-    console.log('playlist.json তৈরি সম্পন্ন!');
+    console.log('playlist.json তৈরি সফল হয়েছে!');
 }
 
 generatePlaylists();
