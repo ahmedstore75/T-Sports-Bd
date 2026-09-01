@@ -5,7 +5,6 @@ const BENGALI_KEYWORDS = [
     'ntv', 'rtv', 'bangla', 'bd', 'deepto', 'nagorik', 'btv', 'maasranga', 'channel 24'
 ];
 
-// র‍্যান্ডম ব্রাউজার ইউজার এজেন্ট
 const USER_AGENTS = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
@@ -17,11 +16,10 @@ function getRandomUserAgent() {
 }
 
 async function generatePlaylists() {
-    console.log("Fetching channels and dynamic cookies...");
+    console.log("Fetching channels and dynamic cookies for all network players...");
 
     const rawChannels = [];
 
-    // ১০০ থেকে ৪১০ আইডি ফেচ করা
     for (let id = 100; id <= 410; id++) {
         try {
             const apiUrl = `https://kong.akash-go.com/content-detail/pub/api/v6/channels/${id}`;
@@ -51,7 +49,6 @@ async function generatePlaylists() {
                 const streamUrl = channelMeta.nonProtectedHlsConsumerUrl || channelMeta.protectedHlsConsumerUrl || "";
                 const category = channelMeta.category || "News";
 
-                // ডায়নামিক কুকি বের করা
                 let dynamicCookie = "";
                 const setCookieHeader = response.headers.get('set-cookie');
                 if (setCookieHeader) {
@@ -68,7 +65,6 @@ async function generatePlaylists() {
                     }
                 }
 
-                // যদি স্ট্রিম ইউআরএল থাকে তবে যুক্ত হবে
                 if (streamUrl) {
                     rawChannels.push({
                         name: channelName,
@@ -80,7 +76,7 @@ async function generatePlaylists() {
                 }
             }
         } catch (err) {
-            // স্কিপ আইডি
+            // স্কিপ
         }
     }
 
@@ -89,7 +85,7 @@ async function generatePlaylists() {
         return;
     }
 
-    // ডুপ্লিকেট ফিল্টার
+    // ডুপ্লিকেট রিমুভ
     const uniqueChannels = [];
     const seenNames = new Set();
 
@@ -101,7 +97,7 @@ async function generatePlaylists() {
         }
     }
 
-    // বাংলা চ্যানেল উপরে সর্ট করা
+    // বাংলা চ্যানেল সবার উপরে সর্ট
     uniqueChannels.sort((a, b) => {
         const aIsBengali = BENGALI_KEYWORDS.some(key => a.name.toLowerCase().includes(key)) || a.category.toLowerCase().includes('bangla');
         const bIsBengali = BENGALI_KEYWORDS.some(key => b.name.toLowerCase().includes(key)) || b.category.toLowerCase().includes('bangla');
@@ -111,16 +107,22 @@ async function generatePlaylists() {
         return a.name.localeCompare(b.name);
     });
 
-    // ১. M3U প্লেলিস্ট সেভ করা
+    // ১. ইউনিভার্সাল M3U প্লেলিস্ট (সব ধরণের অ্যান্ড্রয়েড/স্মার্ট টিভি অ্যাপ সাপোর্ট করার জন্য)
     let m3uContent = '#EXTM3U\n\n';
     uniqueChannels.forEach(ch => {
+        const ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+        
         m3uContent += `#EXTINF:-1 tvg-logo="${ch.logo}" group-title="${ch.category}",${ch.name}\n`;
-        m3uContent += `#EXTHTTP:{"cookie":"${ch.cookie}"}\n`;
+        // VLC / TiviMate / OTT Navigator স্ট্যান্ডার্ড হেডার
+        m3uContent += `#EXTVLCOPT:http-user-agent=${ua}\n`;
+        m3uContent += `#EXTVLCOPT:http-cookie=${ch.cookie}\n`;
+        // সাধারণ অ্যাপগুলোর জন্য
+        m3uContent += `#EXTHTTP:{"cookie":"${ch.cookie}", "User-Agent":"${ua}"}\n`;
         m3uContent += `${ch.stream_url}\n\n`;
     });
     fs.writeFileSync('playlist.m3u', m3uContent);
 
-    // ২. JSON প্লেলিস্ট সেভ করা
+    // ২. JSON প্লেলিস্ট
     const today = new Date().toISOString().split('T')[0];
     const jsonStructure = {
         status: "success",
@@ -138,7 +140,7 @@ async function generatePlaylists() {
     };
 
     fs.writeFileSync('playlist.json', JSON.stringify(jsonStructure, null, 2));
-    console.log(`সফলভাবে ${uniqueChannels.length}টি চ্যানেল এবং কুকিসহ ফাইল সেভ করা হয়েছে!`);
+    console.log(`সফলভাবে ${uniqueChannels.length}টি চ্যানেল নেটওয়ার্ক প্লেয়ারের উপযোগী প্লেলিস্টে সেভ করা হয়েছে!`);
 }
 
 generatePlaylists();
