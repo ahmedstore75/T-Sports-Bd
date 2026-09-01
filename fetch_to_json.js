@@ -6,7 +6,7 @@ const BENGALI_KEYWORDS = [
 ];
 
 async function generatePlaylists() {
-    console.log("Fetching channels and updating play-headers...");
+    console.log("Fetching individual channel signatures & cookies...");
 
     const rawChannels = [];
 
@@ -17,7 +17,7 @@ async function generatePlaylists() {
             const response = await fetch(apiUrl, {
                 method: 'GET',
                 headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0 Safari/537.36',
                     'Accept': 'application/json, text/plain, */*',
                     'Origin': 'https://akashgo.com',
                     'Referer': 'https://akashgo.com/',
@@ -34,39 +34,58 @@ async function generatePlaylists() {
                 const channelName = (channelMeta.channelName || channelMeta.name).trim();
                 const logoUrl = channelMeta.logo || "";
                 const streamUrl = channelMeta.nonProtectedHlsConsumerUrl || channelMeta.protectedHlsConsumerUrl || "";
-                const category = channelMeta.category || "News";
+                const category = channelMeta.category || "General";
 
-                let dynamicCookie = "";
+                // --- প্রতিটি চ্যানেলের জন্য পৃথক Edge Signature ও Policy বের করার লজিক ---
+                let channelCookie = "";
+
+                // ১. চেক: API Response-এর Set-Cookie হেডার
                 const setCookieHeader = response.headers.get('set-cookie');
-                if (setCookieHeader) {
-                    dynamicCookie = setCookieHeader.split(';')[0];
+                if (setCookieHeader && setCookieHeader.includes('Edge-Signature')) {
+                    channelCookie = setCookieHeader.split(';')[0];
                 }
 
-                if (!dynamicCookie && channelMeta.cookie) {
-                    dynamicCookie = channelMeta.cookie;
+                // ২. চেক: মেটাডেটার ভেতরের edgePolicy এবং edgeSignature
+                if (!channelCookie && channelMeta.edgePolicy && channelMeta.edgeSignature) {
+                    channelCookie = `Edge-Policy=${channelMeta.edgePolicy};Edge-Signature=${channelMeta.edgeSignature}`;
                 }
 
-                if (streamUrl && dynamicCookie) {
+                // ৩. চেক: মেটাডেটার সরাসরি 'cookie' ফিল্ড
+                if (!channelCookie && channelMeta.cookie) {
+                    channelCookie = channelMeta.cookie;
+                }
+
+                // ৪. চেক: 'token' ফিল্ডে সম্পূর্ণ Edge-Policy আছে কিনা
+                if (!channelCookie && channelMeta.token) {
+                    if (channelMeta.token.startsWith('Edge-Policy=')) {
+                        channelCookie = channelMeta.token;
+                    } else {
+                        channelCookie = `Edge-Policy=${channelMeta.token}`;
+                    }
+                }
+
+                // যদি নির্দিষ্ট চ্যানেলের ইউনিক কুকি পাওয়া যায় তবেই কেবল যুক্ত করা হবে
+                if (streamUrl && channelCookie) {
                     rawChannels.push({
                         name: channelName,
                         logo: logoUrl,
                         stream_url: streamUrl,
-                        cookie: dynamicCookie,
+                        cookie: channelCookie,
                         category: category
                     });
                 }
             }
         } catch (err) {
-            // স্কিপ
+            // স্কিপ আইডি
         }
     }
 
     if (rawChannels.length === 0) {
-        console.error("No channels fetched!");
+        console.error("No valid channels with signatures found!");
         return;
     }
 
-    // ডুপ্লিকেট বাদ দেওয়া
+    // ডুপ্লিকেট ফিল্টার
     const uniqueChannels = [];
     const seenNames = new Set();
 
@@ -78,7 +97,7 @@ async function generatePlaylists() {
         }
     }
 
-    // বাংলা চ্যানেল উপরে রাখা
+    // বাংলা চ্যানেল উপরে সর্ট
     uniqueChannels.sort((a, b) => {
         const aIsBengali = BENGALI_KEYWORDS.some(key => a.name.toLowerCase().includes(key));
         const bIsBengali = BENGALI_KEYWORDS.some(key => b.name.toLowerCase().includes(key));
@@ -87,24 +106,21 @@ async function generatePlaylists() {
         return a.name.localeCompare(b.name);
     });
 
-    // M3U প্লেলিস্ট (Headers সহ)
+    // M3U ফাইল তৈরি (প্রত্যেক চ্যানেলের নির্দিষ্ট কুকি ও সিগনেচারসহ)
     let m3uContent = '#EXTM3U\n\n';
-    const ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36';
-    const ref = 'https://akashgo.com/';
+    const ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0 Safari/537.36';
 
     uniqueChannels.forEach(ch => {
         m3uContent += `#EXTINF:-1 tvg-logo="${ch.logo}" group-title="${ch.category}",${ch.name}\n`;
-        // VLC / TiviMate / OTT Navigator সাপোর্টেড হেডার
         m3uContent += `#EXTVLCOPT:http-user-agent=${ua}\n`;
-        m3uContent += `#EXTVLCOPT:http-referrer=${ref}\n`;
         m3uContent += `#EXTVLCOPT:http-cookie=${ch.cookie}\n`;
-        // স্ট্রিমিং ইউআরএল-এর সাথে সরাসরি ক্যোয়ারি প্যারামিটার হেডার বাইন্ডিং
-        m3uContent += `${ch.stream_url}|User-Agent=${encodeURIComponent(ua)}&Referer=${encodeURIComponent(ref)}&Cookie=${encodeURIComponent(ch.cookie)}\n\n`;
+        m3uContent += `#EXTHTTP:{"cookie":"${ch.cookie}"}\n`;
+        m3uContent += `${ch.stream_url}\n\n`;
     });
 
     fs.writeFileSync('playlist.m3u', m3uContent);
 
-    // JSON প্লেলিস্ট
+    // JSON ফাইল তৈরি
     const today = new Date().toISOString().split('T')[0];
     const jsonStructure = {
         status: "success",
@@ -117,17 +133,12 @@ async function generatePlaylists() {
             name: ch.name,
             logo: ch.logo,
             stream_url: ch.stream_url,
-            cookie: ch.cookie,
-            headers: {
-                "User-Agent": ua,
-                "Referer": ref,
-                "Cookie": ch.cookie
-            }
+            cookie: ch.cookie
         }))
     };
 
     fs.writeFileSync('playlist.json', JSON.stringify(jsonStructure, null, 2));
-    console.log(`সফলভাবে ${uniqueChannels.length}টি চ্যানেলের স্ট্রিমিং হেডার আপডেট করা হয়েছে।`);
+    console.log(`সফলভাবে ${uniqueChannels.length}টি চ্যানেলের নিজস্ব Edge Signature ও Cookie সহ প্লেলিস্ট সেভ হয়েছে!`);
 }
 
 generatePlaylists();
