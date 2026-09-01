@@ -24,7 +24,7 @@ async function generatePlaylists() {
     // ১০০ থেকে ৪১০ আইডি ফেচ করা
     for (let id = 100; id <= 410; id++) {
         try {
-            const apiUrl = `https://kong.akash-go.com/content-detail/pub/api/v6/channels/${id}`;
+            const apiUrl = `https://kong.akash-go.com/content-detail/pub/api/v6/channels/318`;
             
             const response = await fetch(apiUrl, {
                 method: 'GET',
