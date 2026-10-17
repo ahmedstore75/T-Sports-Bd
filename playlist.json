@@ -16,7 +16,7 @@
       "id": 2,
       "name": "BTV",
       "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1784629845642.png",
-      "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1725/output/index.m3u8",
+      "stream_url": "https://nkafmbewiff.gpcdn.net/tile_2/master.m3u8",
       "cookie": "Edge-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9vd3Jjb3ZjcnB5LmdwY2RuLm5ldC9icGstdHYvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRWRnZVRpbWUiOjE3ODgyNTMyMzd9fX1dfQ;Edge-Signature=V3G6GBiA2N6wlM8aLqfdsv1kOW8Z1pxEZgL9GwEuiIs"
     },
     {
@@ -30,7 +30,7 @@
       "id": 4,
       "name": "Channel I HD",
       "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1740567626692.png",
-      "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/index.m3u8",
+      "stream_url": "https://nkafmbewiff.gpcdn.net/tile_5/master.m3u8",
       "cookie": "Edge-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9vd3Jjb3ZjcnB5LmdwY2RuLm5ldC9icGstdHYvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRWRnZVRpbWUiOjE3ODgyNTMyMzd9fX1dfQ;Edge-Signature=V3G6GBiA2N6wlM8aLqfdsv1kOW8Z1pxEZgL9GwEuiIs"
     },
     {
@@ -44,21 +44,21 @@
       "id": 6,
       "name": "Deepto TV HD",
       "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1742713000749.png",
-      "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1711/output/index.m3u8",
+      "stream_url": "https://nkafmbewiff.gpcdn.net/tile_6/master.m3u8",
       "cookie": "Edge-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9vd3Jjb3ZjcnB5LmdwY2RuLm5ldC9icGstdHYvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRWRnZVRpbWUiOjE3ODgyNTMyMzd9fX1dfQ;Edge-Signature=V3G6GBiA2N6wlM8aLqfdsv1kOW8Z1pxEZgL9GwEuiIs"
     },
     {
       "id": 7,
       "name": "Ekattor HD",
       "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1739963327549.png",
-      "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1705/output/index.m3u8",
+      "stream_url": "https://nkafmbewiff.gpcdn.net/tile_1/master.m3u8",
       "cookie": "Edge-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9vd3Jjb3ZjcnB5LmdwY2RuLm5ldC9icGstdHYvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRWRnZVRpbWUiOjE3ODgyNTMyMzd9fX1dfQ;Edge-Signature=V3G6GBiA2N6wlM8aLqfdsv1kOW8Z1pxEZgL9GwEuiIs"
     },
     {
       "id": 8,
       "name": "Maasranga TV",
       "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1788764648012.png",
-      "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1722/output/index.m3u8",
+      "stream_url": "https://nkafmbewiff.gpcdn.net/tile_4/master.m3u8",
       "cookie": "Edge-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9vd3Jjb3ZjcnB5LmdwY2RuLm5ldC9icGstdHYvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRWRnZVRpbWUiOjE3ODgyNTMyMzd9fX1dfQ;Edge-Signature=V3G6GBiA2N6wlM8aLqfdsv1kOW8Z1pxEZgL9GwEuiIs"
     },
     {
@@ -100,7 +100,7 @@
       "id": 14,
       "name": "Channel 9 HD",
       "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1770188008067.png",
-      "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/index.m3u8",
+      "stream_url": "https://nkafmbewiff.gpcdn.net/tile_7/master.m3u8",
       "cookie": "Edge-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9vd3Jjb3ZjcnB5LmdwY2RuLm5ldC9icGstdHYvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRWRnZVRpbWUiOjE3ODgyNTMyMzd9fX1dfQ;Edge-Signature=V3G6GBiA2N6wlM8aLqfdsv1kOW8Z1pxEZgL9GwEuiIs"
     },
     {
@@ -212,7 +212,7 @@
       "id": 30,
       "name": "SATV HD",
       "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1791451187774.png",
-      "stream_url": "https://j6nfugukcl.gpcdn.net/tile_5/master.m3u8",
+      "stream_url": "https://nkafmbewiff.gpcdn.net/tile_3/master.m3u8",
       "cookie": "Edge-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9vd3Jjb3ZjcnB5LmdwY2RuLm5ldC9icGstdHYvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRWRnZVRpbWUiOjE3ODgyNTMyMzd9fX1dfQ;Edge-Signature=V3G6GBiA2N6wlM8aLqfdsv1kOW8Z1pxEZgL9GwEuiIs"
     },
     {
