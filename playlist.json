@@ -3,7 +3,7 @@
   "name": "Live Channels",
   "owner": "Ahammad Ali",
   "channels_amount": 52,
-  "last_update": "2026-11-25",
+  "last_update": "2026-11-26",
   "response": [
     {
       "id": 1,
@@ -288,21 +288,21 @@
     {
       "id": 41,
       "name": "Sony Sports TEN 1",
-      "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1795556713118.png",
+      "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1795643112957.png",
       "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1719/output/index.m3u8",
       "cookie": "Edge-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9vd3Jjb3ZjcnB5LmdwY2RuLm5ldC9icGstdHYvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRWRnZVRpbWUiOjE3ODgyNTMyMzd9fX1dfQ;Edge-Signature=V3G6GBiA2N6wlM8aLqfdsv1kOW8Z1pxEZgL9GwEuiIs"
     },
     {
       "id": 42,
       "name": "Sony Sports TEN 2",
-      "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1795556713130.png",
+      "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1795643110457.png",
       "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1726/output/index.m3u8",
       "cookie": "Edge-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9vd3Jjb3ZjcnB5LmdwY2RuLm5ldC9icGstdHYvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRWRnZVRpbWUiOjE3ODgyNTMyMzd9fX1dfQ;Edge-Signature=V3G6GBiA2N6wlM8aLqfdsv1kOW8Z1pxEZgL9GwEuiIs"
     },
     {
       "id": 43,
       "name": "Sony Sports TEN 5",
-      "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1795556711924.png",
+      "logo": "https://tstatic.akash-go.com/cms-ui/images/custom-content/1795643111616.png",
       "stream_url": "https://owrcovcrpy.gpcdn.net/bpk-tv/1717/output/index.m3u8",
       "cookie": "Edge-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9vd3Jjb3ZjcnB5LmdwY2RuLm5ldC9icGstdHYvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRWRnZVRpbWUiOjE3ODgyNTMyMzd9fX1dfQ;Edge-Signature=V3G6GBiA2N6wlM8aLqfdsv1kOW8Z1pxEZgL9GwEuiIs"
     },
